@@ -21,32 +21,53 @@ const createUser = async (data: {
   email: string;
   fullName: string;
   password: string;
+  phone: string;
 }): Promise<Partial<IUser>> => {
-  const hashedPassword = await getHashedPassword(data.password);
-  const otp = getOtp(4);
-  const expDate = getExpiryTime(10);
+  const session = await mongoose.startSession();
+  session.startTransaction();
 
-  //user data
-  const userData = {
-    email: data.email,
-    password: hashedPassword,
-    authentication: { otp, expDate },
-  };
-  const createdUser = await User.create(userData);
+  try {
+    const hashedPassword = await getHashedPassword(data.password);
+    const otp = getOtp(4);
+    const expDate = getExpiryTime(10);
 
-  //user profile data
-  const userProfileData = {
-    fullName: data.fullName,
-    email: createdUser.email,
-    user: createdUser._id,
-  };
-  await UserProfile.create(userProfileData);
-  await sendEmail(
-    data.email,
-    "Email Verification Code",
-    `Your code is: ${otp}`
-  );
-  return { email: createdUser.email, isVerified: createdUser.isVerified };
+    // Step 1: Create user
+    const userData = {
+      email: data.email,
+      password: hashedPassword,
+      authentication: { otp, expDate },
+    };
+    const createdUser = await User.create([userData], { session });
+
+    // Step 2: Create user profile
+    const userProfileData = {
+      fullName: data.fullName,
+      email: data.email,
+      user: createdUser[0]._id,
+      phone: data.phone,
+    };
+    await UserProfile.create([userProfileData], { session });
+
+    // Step 3: Send OTP email
+    await sendEmail(
+      data.email,
+      "Email Verification Code",
+      `Your code is: ${otp}`
+    );
+
+    // Step 4: Commit transaction
+    await session.commitTransaction();
+    session.endSession();
+
+    return {
+      email: createdUser[0].email,
+      isVerified: createdUser[0].isVerified,
+    };
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    throw error;
+  }
 };
 
 const getAllUser = async (queries: { searchTerm?: string; page?: number }) => {
