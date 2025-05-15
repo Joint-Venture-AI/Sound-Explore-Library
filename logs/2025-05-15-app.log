@@ -1,0 +1,12 @@
+{"level":"info","message":"MongoDB connected","service":"your-service-name","timestamp":"2025-05-15 07:31:50"}
+{"level":"info","message":"Admin already created","service":"your-service-name","timestamp":"2025-05-15 07:31:51"}
+{"level":"info","message":"Example app listening on port 4500 & ip:192.168.10.18","service":"your-service-name","timestamp":"2025-05-15 07:31:51"}
+{"level":"info","message":"MongoDB connected","service":"your-service-name","timestamp":"2025-05-15 07:37:52"}
+{"level":"info","message":"Admin already created","service":"your-service-name","timestamp":"2025-05-15 07:37:52"}
+{"level":"info","message":"Example app listening on port 4500 & ip:192.168.10.18","service":"your-service-name","timestamp":"2025-05-15 07:37:53"}
+{"level":"info","message":"MongoDB connected","service":"your-service-name","timestamp":"2025-05-15 07:38:12"}
+{"level":"info","message":"Admin already created","service":"your-service-name","timestamp":"2025-05-15 07:38:13"}
+{"level":"info","message":"Example app listening on port 4500 & ip:192.168.10.18","service":"your-service-name","timestamp":"2025-05-15 07:38:13"}
+{"level":"info","message":"MongoDB connected","service":"your-service-name","timestamp":"2025-05-15 07:39:44"}
+{"level":"info","message":"Admin already created","service":"your-service-name","timestamp":"2025-05-15 07:39:45"}
+{"level":"info","message":"Example app listening on port 4500 & ip:192.168.10.18","service":"your-service-name","timestamp":"2025-05-15 07:39:45"}
